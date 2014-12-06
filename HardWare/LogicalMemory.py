@@ -1,3 +1,4 @@
+from numpy.core.defchararray import index
 from HardWare import FirstFit
 from HardWare.MemoryBlock import MemoryBlock
 
@@ -6,13 +7,14 @@ __author__ = 'adri'
 
 class LogicalMemory:
 
-    def __init__(self, memory):
+    def __init__(self, memory, hdd):
         self.memory = memory
         self.size_of_memory = self.memory.size_of_memory
         self.empty_blocks = []
         self.set_empty_blocks()
         self.used_blocks = []
         self.fit = FirstFit()
+        self.hdd = hdd
 
     def set_empty_blocks(self):
         memory_block = MemoryBlock(0, self.size_of_memory())
@@ -32,18 +34,26 @@ class LogicalMemory:
 
     def get_hdd_blocks(self, pcb):
         data = pcb.data.data
+        hdd = self.hdd
+        list_of_hdd_blocks = []
+        for sector, blocks in data.iteritems():
+            program_blocks = hdd[sector]
+            corrected_blocks = self.get_corrected_blocks(program_blocks, blocks)
+            list_of_hdd_blocks += corrected_blocks
 
-
-
-    def write_blocks_on_memory(self, empty_block, list_of_hdd_block):
-        for b in list_of_hdd_block:
-            self.write_one_block_on_memory(b, empty_block)
+    def get_corrected_blocks(self, program_blocks, blocks):
+        corrected_blocks = filter(lambda x: x.__index__() in blocks, program_blocks)
+        return corrected_blocks
 
     def write_one_block_on_memory(self, hdd_block, empty_block):
         actual_index_of_memory = empty_block.init
         for i in hdd_block:
             self.memory[actual_index_of_memory] = i
             actual_index_of_memory += 1
+
+    def write_blocks_on_memory(self, empty_block, list_of_hdd_block):
+        for b in list_of_hdd_block:
+            self.write_one_block_on_memory(b, empty_block)
 
 
 

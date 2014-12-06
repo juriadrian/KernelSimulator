@@ -1,4 +1,5 @@
 from FileSys.Data import Data
+from FileSys.Folder import Folder
 from Handlers.BlockHdd import BlockHdd
 
 __author__ = 'Pato'
