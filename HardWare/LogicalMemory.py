@@ -34,15 +34,16 @@ class LogicalMemory:
 
     def get_hdd_blocks(self, pcb):
         data = pcb.data.data
-        hdd = self.hdd
+        hdd_sectors = self.hdd.sectors
         list_of_hdd_blocks = []
         for sector, blocks in data.iteritems():
-            program_blocks = hdd[sector]
+            program_blocks = hdd_sectors[sector]
             corrected_blocks = self.get_corrected_blocks(program_blocks, blocks)
             list_of_hdd_blocks += corrected_blocks
+        return list_of_hdd_blocks
 
     def get_corrected_blocks(self, program_blocks, blocks):
-        corrected_blocks = filter(lambda x: x.__index__() in blocks, program_blocks)
+        corrected_blocks = list(filter(lambda x: x.__index__() in blocks, program_blocks))
         return corrected_blocks
 
     def write_one_block_on_memory(self, hdd_block, empty_block):
