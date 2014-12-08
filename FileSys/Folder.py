@@ -27,7 +27,7 @@ class Folder():
             ret.append(file)
         return ret
 
-    def add_new_file(self, file_name, data):
+    def add_new_file(self, file_name):
         file_to_save = File(file_name)
         self.files.append(file_to_save)
         return file_to_save

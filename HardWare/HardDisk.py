@@ -7,25 +7,27 @@ __author__ = 'Pato'
 
 class HardDisk:
 
-    def __init__(self):
+    def __init__(self, root):
         self.sectors = {}
         self.blocks = []
         self.sectorWithSpace = 0
-        self.file_system = Folder('root')
+        self.file_system = root
 
-    def save_program(self, program, folder_name, file_name):
+    def save_program(self, program, path, file_name):
         psize = 0
         i = 0
         data = Data(program.program_name)
-        while psize < program.get_instructions().size():
-            self.generate_block(data, program.get_instructions[i:(i + 10)])
+        instructions_of_program = program.get_instructions()
+        while psize < instructions_of_program.__len__():
+            self.generate_block(data, instructions_of_program[i:(i + 10)])
             psize += 10
             i += 10
-        self.file_system.add_file_to_folder(folder_name, file_name, data)
+        folder_to_save = self.file_system.cd(path)
+        folder_to_save.add_new_file(file_name)
 
-    def generate_block(self, data, program_name, instructions):
-        block = BlockHdd(program_name)
-        backuplist = instructions()
+    def generate_block(self, data, instructions):
+        block = BlockHdd(data.program_name)
+        backuplist = instructions
         for i in backuplist:
             block.add_instruction(i)
         block.check_size()
@@ -39,8 +41,6 @@ class HardDisk:
         self.blocks.append(block)
         self.sectors[self.sectorWithSpace] = self.blocks
         return self.blocks.index(block)
-
-
 
     def seek_program(self, command):
         for i in self.programs:
