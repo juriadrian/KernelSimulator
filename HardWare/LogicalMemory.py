@@ -4,7 +4,7 @@ from HardWare.MemoryBlock import MemoryBlock
 
 __author__ = 'adri'
 
-
+# Mirar como se modifican los bloques libres
 class LogicalMemory:
 
     def __init__(self, memory, hdd):
@@ -24,6 +24,16 @@ class LogicalMemory:
         number_of_instructions = pcb.total_instructions()
         empty_block = self.check_for_empty_blocks(number_of_instructions)
         self.write_program_in_block(empty_block, pcb)
+        self.modify_blocks(empty_block, number_of_instructions)
+
+    def modify_blocks(self, empty_block, number_of_instructions):
+        modified_index = empty_block.init + number_of_instructions
+        new_used_block = MemoryBlock(empty_block.init, modified_index)
+        self.used_blocks.append(new_used_block)
+        if modified_index == empty_block.end:
+            self.empty_blocks.remove(empty_block)
+        else:
+            empty_block.change_init(modified_index)
 
     def check_for_empty_blocks(self, number_of_instructions):
         return self.fit.get_an_empty_block(self.empty_blocks, number_of_instructions)

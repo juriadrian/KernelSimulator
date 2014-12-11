@@ -34,7 +34,7 @@ class CpuModel:
                 break
             elif instruction.is_input_output():
                 print('i/o')
-                pcb_hand = HandlerIO(self.pcb)
+                pcb_hand = HandlerIO(self.pcb, instruction)
                 break
             else:
                 count -= 1

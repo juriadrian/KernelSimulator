@@ -53,6 +53,7 @@ class Folder():
 
     def add_folder(self, folder):
         self.folders.append(folder)
+        self.hdd.create_inode_for_folder(self.name, folder.name)
 
     def add_file(self, file):
         self.files.append(file)

@@ -1,5 +1,6 @@
 from FileSys.Data import Data
 from FileSys.Folder import Folder
+from FileSys.INode import INode
 from Handlers.BlockHdd import BlockHdd
 
 __author__ = 'Pato'
@@ -10,8 +11,10 @@ class HardDisk:
     def __init__(self, root):
         self.sectors = {}
         self.blocks = []
+        self.i_nodes = []
         self.sectorWithSpace = 0
         self.file_system = root
+        self.i_nodes.append(INode('root'))
 
     def save_program(self, program, path, file_name):
         psize = 0
@@ -24,6 +27,8 @@ class HardDisk:
             i += 10
         folder_to_save = self.file_system.cd(path)
         folder_to_save.add_new_file(file_name)
+        #Generar un pcb, el cual tenga al objeto data y este asociado al correspondiente File
+        self.create_inode_for_file(file_name, data, folder_to_save)
 
     def generate_block(self, data, instructions):
         block = BlockHdd(data.program_name)
@@ -48,3 +53,21 @@ class HardDisk:
             if i.get_program_name() == command:
                 return i
                 # throw Program_not_found_exception
+
+    def get_inode(self, folder_to_save_name):
+        #inode_to_return = list(filter(lambda x: x.name == folder_to_save.name, self.i_nodes))
+        inode_to_return = next(x for x in self.i_nodes if x.name == folder_to_save_name)
+        return inode_to_return
+
+    def create_inode_for_file(self, file_name, data, folder):
+        new_inode = INode(file_name)
+        new_inode.add_pointer(data)
+        self.i_nodes.append(new_inode)
+        inode_to_change = self.get_inode(folder.name)
+        inode_to_change.add_pointer(new_inode)
+
+    def create_inode_for_folder(self, inode_name, folder_name):
+        folder_inode = INode(folder_name)
+        current_inode = self.get_inode(inode_name)
+        current_inode.add_pointer(folder_inode)
+        self.i_nodes.append(folder_inode)
