@@ -20,6 +20,7 @@ class Kernel:
         self.my_short_scheduler = ShortTermScheduler(self)
         self.my_loader = a_loader
         self.my_irq_manager = IrqManager(self)
+        self.file_system = self.create_file_system()
 
     '''def run(self, command):
         memory_position = self.my_loader.run(command, self.my_hard_disk, self.my_memory)

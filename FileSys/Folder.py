@@ -48,7 +48,7 @@ class Folder():
         return path.split('/')
 
     def find_folder(self, folder_name):
-        fold = filter(lambda x: x.name == folder_name, self.folders)
+        fold = next(x for x in self.folders if x.name == folder_name)
         return fold[0]
 
     def add_folder(self, folder):
