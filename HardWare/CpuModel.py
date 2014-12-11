@@ -26,7 +26,7 @@ class CpuModel:
         count = self.quantum
         pcb_hand = None
         while count > 0 or self.quantum == -1:
-            instruction = self.memory.get_instruction_of_cell(self.pcb.memory_position)
+            instruction = self.memory.get_instruction_of_cell(self.pcb.memory_position)#En vez de usar memory position usaremos el PROGRAM COUNTER
             if instruction == 'EOF':
                 #setState con enum
                 print('termino el proceso')

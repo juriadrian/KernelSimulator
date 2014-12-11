@@ -25,10 +25,7 @@ class HardDisk:
             self.generate_block(data, instructions_of_program[i:(i + 10)])
             psize += 10
             i += 10
-        folder_to_save = self.file_system.cd(path)
-        folder_to_save.add_new_file(file_name)
-        #Generar un pcb, el cual tenga al objeto data y este asociado al correspondiente File
-        self.create_inode_for_file(file_name, data, folder_to_save)
+        self.create_file(path, file_name, data)
 
     def generate_block(self, data, instructions):
         block = BlockHdd(data.program_name)
@@ -47,15 +44,8 @@ class HardDisk:
         self.sectors[self.sectorWithSpace] = self.blocks
         return self.blocks.index(block)
 
-    def seek_program(self, command):
-        for i in self.programs:
-            print (i.get_program_name())
-            if i.get_program_name() == command:
-                return i
-                # throw Program_not_found_exception
-
     def get_inode(self, folder_to_save_name):
-        #inode_to_return = list(filter(lambda x: x.name == folder_to_save.name, self.i_nodes))
+        #inode_to_return = list(filter(lambda x: x.name == folder_to_save_name, self.i_nodes))
         inode_to_return = next(x for x in self.i_nodes if x.name == folder_to_save_name)
         return inode_to_return
 
@@ -65,9 +55,25 @@ class HardDisk:
         self.i_nodes.append(new_inode)
         inode_to_change = self.get_inode(folder.name)
         inode_to_change.add_pointer(new_inode)
+        return new_inode
 
     def create_inode_for_folder(self, inode_name, folder_name):
         folder_inode = INode(folder_name)
         current_inode = self.get_inode(inode_name)
         current_inode.add_pointer(folder_inode)
         self.i_nodes.append(folder_inode)
+
+    def create_file(self, path, file_name, data):
+        folder_to_save = self.file_system.cd(path)
+        inode = self.create_inode_for_file(file_name, data, folder_to_save)
+        folder_to_save.add_new_file(file_name, inode)
+
+
+
+#MISCELLANEOUS
+    def seek_program(self, command):
+        for i in self.programs:
+            print (i.get_program_name())
+            if i.get_program_name() == command:
+                return i
+                # throw Program_not_found_exception

@@ -21,7 +21,7 @@ class LogicalMemory:
         self.empty_blocks.append(memory_block)
 
     def write_program(self, pcb):
-        number_of_instructions = pcb.total_instructions()
+        number_of_instructions = pcb.size_of_program
         empty_block = self.check_for_empty_blocks(number_of_instructions)
         self.write_program_in_block(empty_block, pcb)
         self.modify_blocks(empty_block, number_of_instructions)

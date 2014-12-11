@@ -3,11 +3,12 @@ __author__ = 'Pato'
 
 class PCB:
 
-    def __init__(self, mempos, pid, priority):
+    def __init__(self, pid, data, priority=-1):
         self.pid = pid
-        ##self.programState = Ready() arranca en New()
-        self.memory_position = mempos
+        #self.programState = Ready() arranca en New()
         self.pc = 0
+        self.data = data
+        self.size_of_program = data.size
         self.priority = priority
 
     def increase_priority(self, x):

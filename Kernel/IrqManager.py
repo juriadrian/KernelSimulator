@@ -10,6 +10,8 @@ class IrqManager:
         self.pending_irqs.append(irq)
 
     def execute(self):
-        for irq in self.pending_irqs:
+        '''for irq in self.pending_irqs:
             irq.execute(self.kernel)
-            self.pending_irqs.remove(irq)
+            self.pending_irqs.remove(irq)'''
+        map(lambda x: x.execute, self.pending_irqs)
+        self.pending_irqs = []

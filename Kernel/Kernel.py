@@ -28,14 +28,15 @@ class Kernel:
     def create_file_system(self):
         i_nodes = self.my_hard_disk.i_nodes
 
+    def run(self, path):
+        new_pcb = self.create_pcb(path)
+        self.my_loader.run(new_pcb, self.logical_memory)
+        self.my_irq_manager.handle(HandlerNew(new_pcb))
 
-    def run(self, pcb):
-        self.my_loader.run(pcb, self.logical_memory)
-        self.my_irq_manager.
 
-
-    def create_pcb(self, memory_position):
+    def create_pcb(self, path):
+        data = self.file_system.get_data(path)
         #Crear un nuemero random para la prioridad del pcb
-        pcb = PCB(memory_position, self.pid, 5)
-        self.my_irq_manager.handle(HandlerNew(pcb))
+        pcb = PCB(self.pid, data)
         self.pid += 1
+        return pcb
