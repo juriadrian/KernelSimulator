@@ -61,3 +61,15 @@ class Folder():
     def get_path(self):
         return self.path
 
+    def get_file(self, file_name):
+        file = next(f for f in self.files if f.name == file_name)
+        return file
+
+    def get_data(self, path):
+        path_to_folder = path.split_path()
+        file_name_with_extension = path_to_folder.pop()
+        path_to_folder.append('')
+        folder = self.navigate(path_to_folder)
+        file_name_without_extension = file_name_with_extension.split('.')
+        file = folder.get_file(file_name_without_extension[0])
+        return file.inode.pointer

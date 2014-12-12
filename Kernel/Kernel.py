@@ -34,7 +34,6 @@ class Kernel:
         self.my_loader.run(new_pcb, self.logical_memory)
         self.my_irq_manager.handle(HandlerNew(new_pcb))
 
-
     def create_pcb(self, path):
         data = self.file_system.get_data(path)
         #Crear un nuemero random para la prioridad del pcb
