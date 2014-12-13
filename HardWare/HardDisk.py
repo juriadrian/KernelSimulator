@@ -66,7 +66,7 @@ class HardDisk:
     def create_file(self, path, file_name, data):
         folder_to_save = self.file_system.cd(path)
         inode = self.create_inode_for_file(file_name, data, folder_to_save)
-        folder_to_save.add_new_file(file_name, inode)
+        folder_to_save.add_new_file(    file_name, inode)
 
 
 
