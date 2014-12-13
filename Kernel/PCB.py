@@ -8,7 +8,7 @@ class PCB:
         #self.programState = Ready() arranca en New()
         self.pc = 0
         self.data = data
-        self.size_of_program = data.size
+        self.size_of_program = self.data.size
         self.priority = priority
 
     def increase_priority(self, x):

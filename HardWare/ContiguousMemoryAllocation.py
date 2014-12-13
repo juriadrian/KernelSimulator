@@ -1,4 +1,4 @@
-from HardWare.FirstFit import FirstFit
+from HardWare.Fit import FirstFit
 from HardWare.MemoryBlock import MemoryBlock
 from HardWare.MemoryManagement import MemoryManagement
 
@@ -58,7 +58,7 @@ class ContiguousMemoryAllocation(MemoryManagement):
             self.write_one_block_on_memory(b, empty_block, logical_memory)
 
     def compaction(self, logical_memory):
-        sorted_used_blocks = sorted(logical_memory.used, key=(lambda b: b.init))
+        sorted_used_blocks = sorted(logical_memory.used, key=(lambda block: block.init))
         new_index = 0
         for b in sorted_used_blocks:
             if b.init != new_index:

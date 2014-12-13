@@ -1,26 +1,26 @@
-from FileSys.Data import Data
+from FileSys.File import Data
+from FileSys.File import INode
 from FileSys.Folder import Folder
-from FileSys.INode import INode
-from Handlers.BlockHdd import BlockHdd
+
 
 __author__ = 'Pato'
 
 
 class HardDisk:
 
-    def __init__(self, root):
+    def __init__(self):
         self.sectors = {}
         self.blocks = []
         self.i_nodes = []
         self.sectorWithSpace = 0
-        self.file_system = root
+        self.file_system = Folder('root', self)
         self.i_nodes.append(INode('root'))
 
     def save_program(self, program, path, file_name):
         psize = 0
         i = 0
-        data = Data(program.program_name)
         instructions_of_program = program.get_instructions()
+        data = Data(program.program_name, instructions_of_program)
         while psize < instructions_of_program.__len__():
             self.generate_block(data, instructions_of_program[i:(i + 10)])
             psize += 10
@@ -77,3 +77,18 @@ class HardDisk:
             if i.get_program_name() == command:
                 return i
                 # throw Program_not_found_exception
+
+
+class BlockHdd:
+
+    def __init__(self, program_name, block_size=10):
+        self.program_name = program_name
+        self.instructions = []
+        self.block_size = block_size
+
+    def add_instruction(self, instruction):
+        self.instructions.append(instruction)
+
+    def check_size(self):
+        while self.instructions.__len__() <= self.block_size:
+            self.instructions.append(None)

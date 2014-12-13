@@ -19,15 +19,15 @@ class Kernel:
         self.my_long_scheduler = a_long_scheduler
         self.my_short_scheduler = ShortTermScheduler(self)
         self.my_loader = a_loader
-        self.my_irq_manager = IrqManager(self)
-        self.file_system = self.create_file_system()
+        self.my_irq_manager = IrqManager()
+        self.file_system = self.my_hard_disk.file_system
 
     '''def run(self, command):
         memory_position = self.my_loader.run(command, self.my_hard_disk, self.my_memory)
-        self.create_pcb(memory_position)'''
+        self.create_pcb(memory_position)
 
     def create_file_system(self):
-        i_nodes = self.my_hard_disk.i_nodes
+        i_nodes = self.my_hard_disk.i_nodes'''
 
     def run(self, path):
         new_pcb = self.create_pcb(path)

@@ -1,18 +1,12 @@
 __author__ = 'Pato'
 
+
 class Memory:
 
-    def __init__ (self):
-        self.cells = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    def __init__(self):
+        self.cells = []
+        self.size_of_memory = 500
         self.next_cell = 0
-
-    def write_program(self, a_program):
-        memory_position = self.next_cell
-        for i in a_program.instructions:
-            self.cells[self.next_cell] = i
-            self.next_cell += 1
-        #self.cells[self.next_cell] #NO SE QUE HACE ESTO ACA, PARA MI ES UNA LINEA DE MAS
-        return memory_position
 
     def read(self):
         pass
@@ -23,5 +17,3 @@ class Memory:
     def change_instruction_cell(self, from_index, to_index):
         self.cells[to_index] = self.cells[from_index]
         self.cells[from_index] = None
-
-#HAY QUE CAMBIAR LA FORMA EN LA QUE SE ESCRIBE UN PROGRAMA EN MEMORIA, USANDO EL EOF (END OF FILE)

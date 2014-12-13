@@ -1,5 +1,3 @@
-from numpy.core.defchararray import index
-from HardWare import FirstFit
 from HardWare.MemoryBlock import MemoryBlock
 
 __author__ = 'adri'
@@ -12,15 +10,13 @@ class LogicalMemory:
         self.memory = memory
         self.size_of_memory = self.memory.size_of_memory
         self.empty_blocks = []
-        self.set_empty_blocks()
         self.used_blocks = []
+        self.set_empty_blocks()
         self.hdd = hdd
         self.memory_management = None
-        self.empty = True
-        self.used = False
 
     def set_empty_blocks(self):
-        memory_block = MemoryBlock(0, self.size_of_memory(), self.empty)
+        memory_block = MemoryBlock(0, self.size_of_memory)
         self.used_blocks.append(memory_block)
 
     def write_program(self, pcb):

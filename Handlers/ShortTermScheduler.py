@@ -11,7 +11,7 @@ class ShortTermScheduler:
         self.quantum = q
         self.ready_queue = []
         self.ready_queue_size = 50
-        self.sch_strategy = self.set_strategy()
+        self.sch_strategy = sch_strategy
         self.cpu = None
 
     def set_cpu(self, cpu):

@@ -5,13 +5,14 @@ __author__ = 'adri'
 
 class Folder():
 
-    def __init__(self, name, parent=None, root=None):
+    def __init__(self, name, hdd, parent=None, root=None):
         self.name = name
         self.parent = parent
         self.path = self.generate_path()
         self.root = root
         self.folders = []
         self.files = []
+        self.hdd = hdd
 
     def generate_path(self):
         if self.parent is None:
@@ -27,8 +28,8 @@ class Folder():
             ret.append(file)
         return ret
 
-    def add_new_file(self, file_name):
-        file_to_save = File(file_name)
+    def add_new_file(self, file_name, inode):
+        file_to_save = File(file_name, inode)
         self.files.append(file_to_save)
         return file_to_save
 
@@ -66,7 +67,7 @@ class Folder():
         return file
 
     def get_data(self, path):
-        path_to_folder = path.split_path()
+        path_to_folder = self.split_path(path)
         file_name_with_extension = path_to_folder.pop()
         path_to_folder.append('')
         folder = self.navigate(path_to_folder)

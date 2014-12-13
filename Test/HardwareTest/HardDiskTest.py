@@ -7,7 +7,7 @@ import unittest
 
 __author__ = 'adri'
 
-
+# ESTE TEST ERA DE LA IMPLEMENTACION ANTERIOR DE DISCO DURO
 class HardwareTest(unittest.TestCase):
 
     def setUp(self):
