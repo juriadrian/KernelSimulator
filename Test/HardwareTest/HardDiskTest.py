@@ -1,4 +1,4 @@
-from FileSys.File import Data
+from FileSys.File import Data, INode
 from FileSys.Folder import Folder
 from Kernel.Instruction import Instruction
 from HardWare.HardDisk import HardDisk, BlockHdd
@@ -9,7 +9,6 @@ import unittest
 __author__ = 'adri'
 
 
-# ESTE TEST ERA DE LA IMPLEMENTACION ANTERIOR DE DISCO DURO
 class HardwareTest(unittest.TestCase):
 
     def setUp(self):
@@ -35,4 +34,9 @@ class HardwareTest(unittest.TestCase):
     def add_to_sector_test(self):
         block = BlockHdd('testP')
         index_of_block = self.hdd.add_to_sector(block)
-        self.assertEqual(self.hdd.sectors[0])
+        self.assertEqual(self.hdd.sectors[0][index_of_block], block)
+
+    def get_inode_test(self):
+        new_folder = Folder('Documents', self.hdd)
+        self.file_system.add_folder(new_folder)
+        self.assertEqual(self.hdd.get_inode('Documents').name, 'Documents')
