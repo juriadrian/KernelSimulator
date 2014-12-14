@@ -20,7 +20,7 @@ class HardDisk:
         psize = 0
         i = 0
         instructions_of_program = program.get_instructions()
-        data = Data(program.program_name, instructions_of_program)
+        data = Data(program.program_name, instructions_of_program.__len__())
         while psize < instructions_of_program.__len__():
             self.generate_block(data, instructions_of_program[i:(i + 10)])
             psize += 10
@@ -67,16 +67,6 @@ class HardDisk:
         folder_to_save = self.file_system.cd(path)
         inode = self.create_inode_for_file(file_name, data, folder_to_save)
         folder_to_save.add_new_file(    file_name, inode)
-
-
-
-#MISCELLANEOUS
-    def seek_program(self, command):
-        for i in self.programs:
-            print (i.get_program_name())
-            if i.get_program_name() == command:
-                return i
-                # throw Program_not_found_exception
 
 
 class BlockHdd:
