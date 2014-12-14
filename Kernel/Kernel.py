@@ -6,6 +6,7 @@ __author__ = 'Pato'
 
 from PCB import PCB
 from Handlers.HandlerNew import HandlerNew
+from random import randrange
 
 
 class Kernel:
@@ -36,8 +37,8 @@ class Kernel:
 
     def create_pcb(self, path):
         data = self.file_system.get_data(path)
-        #Crear un nuemero random para la prioridad del pcb
-        pcb = PCB(self.pid, data)
+        priority = randrange(1,10)
+        pcb = PCB(self.pid, data, priority)
         self.pid += 1
         return pcb
 

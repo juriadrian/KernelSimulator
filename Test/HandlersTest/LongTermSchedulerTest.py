@@ -23,7 +23,7 @@ class LongTermSchedulerTest(unittest.TestCase):
         self.inst = Instruction('h', self.console)
         self.program = Program('testP')
         self.program.add_instruction(self.inst)
-        self.hdd = HardDisk([self.program])
+        self.hdd = HardDisk()
         self.loader = Loader()
         self.irqManager = IrqManager()
         self.memory = Memory()

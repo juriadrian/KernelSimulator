@@ -49,8 +49,11 @@ class Folder():
         return path.split('/')
 
     def find_folder(self, folder_name):
-        fold = next(x for x in self.folders if x.name == folder_name)
-        return fold[0]
+        fold = None
+        for x in self.folders:
+            if x.name == folder_name:
+                fold = x
+        return fold
 
     def add_folder(self, folder):
         self.folders.append(folder)
@@ -63,7 +66,10 @@ class Folder():
         return self.path
 
     def get_file(self, file_name):
-        file = next(f for f in self.files if f.name == file_name)
+        file = None
+        for f in self.files:
+            if f.name == file_name:
+                file = f
         return file
 
     def get_data(self, path):
@@ -72,5 +78,5 @@ class Folder():
         path_to_folder.append('')
         folder = self.navigate(path_to_folder)
         file_name_without_extension = file_name_with_extension.split('.')
-        file = folder.get_file(file_name_without_extension[0])
+        file = folder.get_file(file_name_without_extension.pop())
         return file.inode.pointer

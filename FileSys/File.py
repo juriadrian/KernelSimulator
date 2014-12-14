@@ -7,10 +7,6 @@ class File():
         self.name = file_name
         self.inode = inode
 
-    def search_blocks(self):
-        #self.hdd.seek_program()
-        pass
-
 
 class INode():
 

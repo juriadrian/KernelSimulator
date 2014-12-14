@@ -1,4 +1,3 @@
-from libxml2mod import last
 from SchStrategy import SchStrategy
 __author__ = 'Pato'
 

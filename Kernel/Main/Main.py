@@ -33,8 +33,8 @@ kernel.my_short_scheduler.set_cpu(cpu)
 file_system = Folder('root', hdd)
 documents_folder = Folder('Documents', hdd, file_system, file_system)
 file_system.add_folder(documents_folder)
-hdd.save_program(program1, 'Documentos/', 'main.py')#Instancia un File en la carpeta correspondiente
-hdd.save_program(program2, 'Documentos/', 'test.py')
+hdd.save_program(program1, 'Documents/', 'main.py')#Instancia un File en la carpeta correspondiente
+hdd.save_program(program2, 'Documents/', 'test.py')
 
 kernel.run('/Documents/main.py')
 kernel.run('/Documents/test.py')

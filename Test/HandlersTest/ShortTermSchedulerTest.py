@@ -26,7 +26,7 @@ class ShortTermSchedulerTest(unittest.TestCase):
         self.inst = Instruction('h', self.console)
         self.program = Program('testP')
         self.program.add_instruction(self.inst)
-        self.hdd = HardDisk([self.program])
+        self.hdd = HardDisk()
         self.memory = Memory()
         self.long = LongTermScheduler()
         self.loader = Loader()
