@@ -4,8 +4,8 @@ __author__ = 'Pato'
 class Memory:
 
     def __init__(self):
-        self.cells = []
-        self.size_of_memory = 500
+        self.cells = [None] * 100
+        self.size_of_memory = 100
         self.next_cell = 0
 
     def read(self):

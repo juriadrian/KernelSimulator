@@ -12,7 +12,7 @@ from random import randrange
 class Kernel:
 
     def __init__(self, a_memory, a_disk, a_long_scheduler, a_loader):
-        self.pcb_instruction =[]
+        self.pcb_instruction = []
         self.my_hard_disk = a_disk
         self.my_memory = a_memory
         self.logical_memory = LogicalMemory(self.my_memory, self.my_hard_disk)

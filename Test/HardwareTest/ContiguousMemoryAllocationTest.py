@@ -1,4 +1,5 @@
 import unittest
+from FileSys.File import Data
 from Handlers.Loader import Loader
 from Handlers.LongTermScheduler import LongTermScheduler
 from HardWare.CpuModel import CpuModel
@@ -6,6 +7,7 @@ from HardWare.HardDisk import HardDisk
 from HardWare.Memory import Memory
 from Kernel.Instruction import Instruction
 from Kernel.Kernel import Kernel
+from Kernel.PCB import PCB
 from Kernel.Program import Program
 from UI.ConsoleOutput import ConsoleOutput
 
@@ -31,4 +33,18 @@ class ContiguousMemoryAllocation(unittest.TestCase):
         self.logical_memory = self.kernel.logical_memory
 
     def write_program_test(self):
-        self.logical_memory.write_program()
+        self.hdd.save_program(self.program, '/', 'testP')
+        data = Data('testP', 1)
+        data.save_data(0, 0)
+        pcb = PCB(1, data)
+        self.logical_memory.write_program(pcb)
+        self.assertEqual(self.memory.cells[0], self.inst)
+        self.assertEqual(self.memory.cells[1], 'EOF')
+
+
+
+
+
+
+
+
