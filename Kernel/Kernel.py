@@ -12,7 +12,6 @@ from random import randrange
 class Kernel:
 
     def __init__(self, a_memory, a_disk, a_long_scheduler, a_loader):
-        self.pcb_instruction = []
         self.my_hard_disk = a_disk
         self.my_memory = a_memory
         self.logical_memory = LogicalMemory(self.my_memory, self.my_hard_disk)
@@ -25,10 +24,7 @@ class Kernel:
 
     '''def run(self, command):
         memory_position = self.my_loader.run(command, self.my_hard_disk, self.my_memory)
-        self.create_pcb(memory_position)
-
-    def create_file_system(self):
-        i_nodes = self.my_hard_disk.i_nodes'''
+        self.create_pcb(memory_position)'''
 
     def run(self, path):
         a = path[1:]
@@ -38,8 +34,10 @@ class Kernel:
 
     def create_pcb(self, path):
         data = self.file_system.get_data(path)
-        priority = randrange(1,10)
+        priority = randrange(1, 10)
         pcb = PCB(self.pid, data, priority)
         self.pid += 1
         return pcb
 
+    '''def create_file_system(self):
+        i_nodes = self.my_hard_disk.i_nodes'''

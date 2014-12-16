@@ -75,7 +75,7 @@ class ContiguousMemoryAllocation(MemoryManagement):
         i = block.end - block.init
         block.init = new_index
         block.end = new_index + i
-        while i >= 0:
+        while i > 0:
             logical_memory.memory.change_instruction_cell(old_memory_index, new_memory_index)
             new_memory_index += 1
             old_memory_index += 1
@@ -89,3 +89,7 @@ class ContiguousMemoryAllocation(MemoryManagement):
             logical_memory.memory.cells[index] = None
             index += 1
         logical_memory.swap_block(block)
+
+    def get_instruction_of_cell(self, pc, block_id, logical_memory):
+        block = next(x for x in logical_memory.used_blocks if x.id == block_id)
+        return logical_memory.memory.get_instruction_of_cell(block.init + pc)

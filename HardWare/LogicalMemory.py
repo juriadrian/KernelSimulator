@@ -1,5 +1,6 @@
 from HardWare.ContiguousMemoryAllocation import ContiguousMemoryAllocation
 from HardWare.MemoryBlock import MemoryBlock
+from HardWare.Paging import Paging
 
 __author__ = 'adri'
 
@@ -35,7 +36,11 @@ class LogicalMemory:
     def compaction(self):
         self.memory_management.compaction(self)
 
+    def set_paging_allocation(self):
+        self.memory_management = Paging(self)
 
+    def get_instruction_of_cell(self, pc, block_id):
+        self.memory_management.get_instruction_of_cell(pc, block_id, self)
 
 
 
