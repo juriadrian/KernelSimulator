@@ -14,14 +14,16 @@ class ContiguousMemoryAllocation(MemoryManagement):
         number_of_instructions = pcb.size_of_program
         empty_block = self.check_for_empty_blocks(number_of_instructions, logical_memory)
         self.write_program_in_block(empty_block, pcb, logical_memory)
-        self.modify_blocks(empty_block, number_of_instructions, logical_memory)
+        self.modify_blocks(empty_block, number_of_instructions, logical_memory, pcb)
 
     def check_for_empty_blocks(self, number_of_instructions, logical_memory):
         return self.fit.get_an_empty_block(logical_memory.empty_blocks, number_of_instructions)
 
-    def modify_blocks(self, empty_block, number_of_instructions, logical_memory):
+    def modify_blocks(self, empty_block, number_of_instructions, logical_memory, pcb):
         modified_index = empty_block.init + number_of_instructions
-        new_used_block = MemoryBlock(empty_block.init, modified_index)
+        new_used_block = MemoryBlock(empty_block.init, modified_index, logical_memory.id)
+        pcb.set_id(new_used_block.id)
+        logical_memory.id += 1
         logical_memory.used_blocks.append(new_used_block)
         if modified_index == empty_block.end:
             logical_memory.empty_blocks.remove(empty_block)
@@ -57,13 +59,14 @@ class ContiguousMemoryAllocation(MemoryManagement):
             self.write_one_block_on_memory(b, empty_block, logical_memory)
 
     def compaction(self, logical_memory):
-        sorted_used_blocks = sorted(logical_memory.used, key=(lambda block: block.init))
+        sorted_used_blocks = sorted(logical_memory.used_blocks, key=(lambda block: block.init))
         new_index = 0
         for b in sorted_used_blocks:
             if b.init != new_index:
                 self.move_block(b, new_index, logical_memory)
-            new_index = b.last + 1
-        new_empty_block = MemoryBlock((sorted_used_blocks[-1].end + 1), logical_memory.memory.size_of_memory())
+            new_index = b.end
+        new_empty_block = MemoryBlock(sorted_used_blocks[-1].end + 1, logical_memory.memory.size_of_memory, logical_memory.id)
+        logical_memory.id += 1
         logical_memory.empty_blocks = [new_empty_block]
 
     def move_block(self, block, new_index, logical_memory):
@@ -76,3 +79,13 @@ class ContiguousMemoryAllocation(MemoryManagement):
             logical_memory.memory.change_instruction_cell(old_memory_index, new_memory_index)
             new_memory_index += 1
             old_memory_index += 1
+            i -= 1
+
+    def delete_program(self, pcb, logical_memory):
+        block_id = pcb.block_id
+        block = next(x for x in logical_memory.used_blocks if x.id == block_id)
+        index = block.init
+        while index < block.end:
+            logical_memory.memory.cells[index] = None
+            index += 1
+        logical_memory.swap_block(block)

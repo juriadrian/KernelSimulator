@@ -43,5 +43,3 @@ class Kernel:
         self.pid += 1
         return pcb
 
-
-    

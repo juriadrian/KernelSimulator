@@ -3,9 +3,10 @@ __author__ = 'adri'
 
 class MemoryBlock:
 
-    def __init__(self, init, end):
+    def __init__(self, init, end, id):
         self.init = init
         self.end = end
+        self.id = id
 
     def change_init(self, index):
         self.init = index

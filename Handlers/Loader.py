@@ -9,5 +9,5 @@ class Loader:
     def run(self, pcb, logical_memory):
         logical_memory.write_program(pcb)
 
-    def remove(self, pcb):
-        pass
+    def remove(self, pcb, logical_memory):
+        logical_memory.delete_program(pcb)

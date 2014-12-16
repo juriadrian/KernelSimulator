@@ -78,4 +78,4 @@ class Folder():
         path_to_folder.append('')
         folder = self.navigate(path_to_folder)
         file = folder.get_file(file_name)
-        return file.inode.pointer
+        return file.inode.pointer[0]
