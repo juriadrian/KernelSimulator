@@ -74,9 +74,8 @@ class Folder():
 
     def get_data(self, path):
         path_to_folder = self.split_path(path)
-        file_name_with_extension = path_to_folder.pop()
+        file_name = path_to_folder.pop()
         path_to_folder.append('')
         folder = self.navigate(path_to_folder)
-        file_name_without_extension = file_name_with_extension.split('.')
-        file = folder.get_file(file_name_without_extension.pop())
+        file = folder.get_file(file_name)
         return file.inode.pointer

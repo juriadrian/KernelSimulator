@@ -31,7 +31,8 @@ class Kernel:
         i_nodes = self.my_hard_disk.i_nodes'''
 
     def run(self, path):
-        new_pcb = self.create_pcb(path)
+        a = path[1:]
+        new_pcb = self.create_pcb(a)
         self.my_loader.run(new_pcb, self.logical_memory)
         self.my_irq_manager.handle(HandlerNew(new_pcb))
 

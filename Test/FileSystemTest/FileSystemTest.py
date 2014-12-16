@@ -8,7 +8,7 @@ class FileSystemTest(unittest.TestCase):
 
     def setUp(self):
         self.hdd = HardDisk()
-        self.root = Folder('root', self.hdd)
+        self.root = self.hdd.file_system
         self.folder1 = Folder('pepe', self.hdd, self.root, self.root)
         self.folder2 = Folder('carlos', self.hdd, self.folder1, self.root)
         self.folder3 = Folder('juan', self.hdd, self.folder2, self.root)
@@ -37,5 +37,5 @@ class FileSystemTest(unittest.TestCase):
         self.assertEqual(p, '/pepe/carlos/juan/')
 
     def get_data_test(self): #ARREGLAR
-        data = self.root.get_data('/pepe/carlos/juan/text.txt')
+        data = self.root.get_data('pepe/carlos/juan/text.txt')
         self.assertEqual(self.inode.pointer, data)

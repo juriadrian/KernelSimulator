@@ -1,5 +1,3 @@
-from gtk._gtk import Object
-
 __author__ = 'adri'
 
 
