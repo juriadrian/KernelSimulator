@@ -45,3 +45,4 @@ clock.register(cpu.execute())
 clock.register(irq_manager.execute())
 
 clock.start()
+
